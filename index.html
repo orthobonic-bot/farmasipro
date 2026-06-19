@@ -222,6 +222,9 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             transition: transform 0.3s;
             padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .producto-card:hover {
@@ -237,6 +240,10 @@
 
         .producto-info {
             padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .producto-categoria {
@@ -257,8 +264,25 @@
         .producto-descripcion {
             font-size: 13px;
             color: #777;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             line-height: 1.4;
+        }
+
+        .btn-add {
+            background-color: #fff0f2;
+            color: #ff5274;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #ff5274;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .btn-add:hover {
+            background-color: #ff5274;
+            color: white;
         }
 
         /* Sección de cómo unirse o comprar (Pasos) */
@@ -299,6 +323,8 @@
             line-height: 1.6;
             margin-bottom: 25px;
         }
+        
+        /* --- BANNER DE METODOS DE PAGO --- */
         .pagos-banner {
             background-color: #ff5274;
             color: white;
@@ -327,6 +353,7 @@
             padding: 10px 20px;
             border-radius: 20px;
             display: flex;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             align-items: center;
             gap: 10px;
             font-weight: 600;
@@ -340,13 +367,15 @@
             background-color: rgba(255, 255, 255, 0.25);
         }
 
+        /* Ajustes clave para garantizar la transparencia pura sin recuadros blancos */
         .pago-logo {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             object-fit: contain;
-            border-radius: 4px;
-            /* Se eliminó el fondo blanco y el padding */
-            mix-blend-mode: multiply; /* Vuelve invisible el fondo blanco de las imágenes */
+            background: transparent !important;
+            border: none !important;
+            /* Añade un sutil relieve blanco para logos oscuros, manteniendo la transparencia total */
+            filter: drop-shadow(0px 1px 2px rgba(255, 255, 255, 0.6)); 
         }
 
         /* Botones de Acción Especiales (CTA) */
@@ -379,14 +408,6 @@
         .btn-join:hover {
             background-color: #e6395b;
             transform: translateY(-2px);
-        }
-
-        /* Info de Pagos */
-        .pagos-banner {
-            background-color: #ff5274;
-            color: white;
-            padding: 30px 8%;
-            text-align: center;
         }
 
         .pagos-banner p {
@@ -578,9 +599,11 @@
                 <div class="producto-card">
                     <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="Skin Care" class="producto-img">
                     <div class="producto-info">
-                        <div class="producto-categoria">Skin Care</div>
-                        <div class="producto-titulo">Cuidado de la Piel</div>
-                        <p class="producto-descripcion">Tratamientos especializados para el acné, manchas (Lumi Radiance), antiedad (Resurface / Age Reversist) y piel sensible.</p>
+                        <div>
+                            <div class="producto-categoria">Skin Care</div>
+                            <div class="producto-titulo">Cuidado de la Piel</div>
+                            <p class="producto-descripcion">Tratamientos especializados para el acné, manchas (Lumi Radiance), antiedad (Resurface / Age Reversist) y piel sensible.</p>
+                        </div>
                         <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
                     </div>
                 </div>
@@ -588,9 +611,11 @@
                 <div class="producto-card">
                     <img src="https://images.unsplash.com/photo-1631730359575-38e4755d772b?auto=format&fit=crop&w=400&q=80" alt="Maquillaje" class="producto-img">
                     <div class="producto-info">
-                        <div class="producto-categoria">Rostro y Labios</div>
-                        <div class="producto-titulo">Maquillaje Profesional</div>
-                        <p class="producto-descripcion">Bases de alta cobertura con efecto filtro, labiales de larga duración que no resecan los labios y máscaras de pestañas de impacto.</p>
+                        <div>
+                            <div class="producto-categoria">Rostro y Labios</div>
+                            <div class="producto-titulo">Maquillaje Profesional</div>
+                            <p class="producto-descripcion">Bases de alta cobertura con efecto filtro, labiales de larga duración que no resecan los labios y máscaras de pestañas de impacto.</p>
+                        </div>
                         <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
                     </div>
                 </div>
@@ -598,9 +623,11 @@
                 <div class="producto-card">
                     <img src="https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80" alt="Capilar" class="producto-img">
                     <div class="producto-info">
-                        <div class="producto-categoria">Corporal y Capilar</div>
-                        <div class="producto-titulo">Cuidado Integral</div>
-                        <p class="producto-descripcion">Champús especializados para la caída del cabello (línea de Ajo y Capixyl) y geles de masaje corporales sumamente relajantes.</p>
+                        <div>
+                            <div class="producto-categoria">Corporal y Capilar</div>
+                            <div class="producto-titulo">Cuidado Integral</div>
+                            <p class="producto-descripcion">Champús especializados para la caída del cabello (línea de Ajo y Capixyl) y geles de masaje corporales sumamente relajantes.</p>
+                        </div>
                         <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
                     </div>
                 </div>
@@ -608,9 +635,11 @@
                 <div class="producto-card">
                     <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80" alt="Nutricion" class="producto-img">
                     <div class="producto-info">
-                        <div class="producto-categoria">Bienestar</div>
-                        <div class="producto-titulo">Nutrición y Bienestar</div>
-                        <p class="producto-descripcion">Suplementos alimenticios, colágeno y cafés saludables (con achicoria o colágeno) para cuidar tu cuerpo de adentro hacia afuera.</p>
+                        <div>
+                            <div class="producto-categoria">Bienestar</div>
+                            <div class="producto-titulo">Nutrición y Bienestar</div>
+                            <p class="producto-descripcion">Suplementos alimenticios, colágeno y cafés saludables (con achicoria o colágeno) para cuidar tu cuerpo de adentro hacia afuera.</p>
+                        </div>
                         <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
                     </div>
                 </div>
@@ -623,27 +652,27 @@
             
             <div class="pagos-grid">
                 <div class="pago-item">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj3G8ua41WWbbtvOXDU50uh4l2oRX7c7-VARsu7G0w4PpaN4BxFCm7oabr&s=10" alt="Pago Móvil" class="pago-logo">
+                    <img src="https://img.icons8.com/fluency/48/smartphone.png" alt="Pago Móvil" class="pago-logo">
                     Pago Móvil
                 </div>
                 <div class="pago-item">
-                    <img src="https://www.shutterstock.com/image-vector/vector-illustration-bolivar-venezuela-currency-260nw-2251311029.jpg" alt="Transferencias" class="pago-logo">
+                    <img src="https://img.icons8.com/fluency/48/bank.png" alt="Transferencias" class="pago-logo">
                     Transferencias en Bs.
                 </div>
                 <div class="pago-item">
-                    <img src="https://logodownload.org/wp-content/uploads/2022/03/zelle-logo-1.png" alt="Zelle" class="pago-logo">
+                    <img src="https://img.icons8.com/color/48/zelle.png" alt="Zelle" class="pago-logo">
                     Zelle
                 </div>
                 <div class="pago-item">
-                    <img src="https://cdn.pixabay.com/photo/2021/04/30/16/47/bnb-6219388_1280.png" alt="Binance" class="pago-logo">
+                    <img src="https://img.icons8.com/color/48/binance.png" alt="Binance" class="pago-logo">
                     Binance (USDT)
                 </div>
                 <div class="pago-item">
-                    <img src="https://play-lh.googleusercontent.com/DbGt0ok20d0c_ovvv4jbrYb8OtxtAVEO1_1neY7Gp_uhM2JKb3bdU3kA0HWZhod4oLcDXnEcbTTWyT_Eh2caqog=w240-h480-rw" alt="Zinli" class="pago-logo">
+                    <img src="https://img.icons8.com/fluency/48/wallet.png" alt="Zinli" class="pago-logo">
                     Zinli
                 </div>
                 <div class="pago-item">
-                    <img src="https://www.shutterstock.com/image-vector/dollar-cash-icon-currency-symbol-260nw-1908013453.jpg" alt="Efectivo" class="pago-logo">
+                    <img src="https://img.icons8.com/fluency/48/money-bag-u-s.png" alt="Efectivo" class="pago-logo">
                     Efectivo
                 </div>
             </div>
@@ -656,13 +685,13 @@
                 <div class="step-card">
                     <h3>Como Cliente</h3>
                     <p>Explora nuestro catálogo digital actual, escríbenos por WhatsApp con los productos de tu preferencia, realiza tu pago y coordinamos el envío seguro a tu ciudad. ¡Incluye asesoría de belleza gratuita!</p>
-                    <a href="https://wa.me/tu_numero_aqui" target="_blank" class="btn-cta btn-whatsapp">👉 ¡Quiero ver el Catálogo y Comprar!</a>
+                    <a href="https://wa.me/584121234567" target="_blank" class="btn-cta btn-whatsapp">👉 ¡Quiero ver el Catálogo y Comprar!</a>
                 </div>
 
                 <div class="step-card">
                     <h3>Como Socio (Brand Influencer)</h3>
                     <p>Adquiere tu membresía de inicio (Kit de Inicio) para obtener desde un 30% hasta un 50% de descuento de por vida en todos los productos y obtén el derecho a comisionar por armar tu propio equipo.</p>
-                    <a href="https://wa.me/tu_numero_aqui" target="_blank" class="btn-cta btn-join">👉 Regístrate como Socio y Gana 50%</a>
+                    <a href="https://wa.me/584121234567" target="_blank" class="btn-cta btn-join">👉 Regístrate como Socio y Gana 50%</a>
                 </div>
             </div>
 
@@ -721,4 +750,3 @@
     </script>
 </body>
 </html>
-
