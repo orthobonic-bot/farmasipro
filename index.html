@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmasi by Ida | Tienda de Belleza</title>
+    <style>
+        /* Estilos Generales y Paleta de Colores */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #fff8f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- MENÚ LATERAL (SIDEBAR) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background-color: #ffffff;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff5274;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar nav a:hover {
+            color: #ffffff;
+            background-color: #ff5274;
+            padding-left: 25px;
+        }
+
+        .close-btn {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            background: none;
+            border: none;
+            color: #ff5274;
+            cursor: pointer;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .main-content {
+            margin-left: 260px; 
+            flex: 1;
+        }
+
+        .mobile-header {
+            display: none;
+            background-color: #ffffff;
+            padding: 15px 20px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .mobile-header .logo-mobile {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff5274;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ff5274;
+            cursor: pointer;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 998;
+        }
+
+        /* --- SECCIONES DE CONTENIDO --- */
+        .hero {
+            background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.2)), url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 10%;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: #4a4a4a;
+            margin-bottom: 15px;
+            max-width: 500px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        /* Sección Confianza / Por qué elegirnos */
+        .features-container {
+            padding: 60px 8%;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: #4a4a4a;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #ff5274;
+            margin: 10px auto 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background-color: #fff8f9;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            text-align: left;
+            border-top: 4px solid #ff5274;
+        }
+
+        .feature-card h3 {
+            color: #ff5274;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Productos y Catálogo */
+        .products-container {
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        .producto-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: transform 0.3s;
+            padding-bottom: 20px;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .producto-info {
+            padding: 15px;
+        }
+
+        .producto-categoria {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #999;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .producto-titulo {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .producto-descripcion {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* Sección de cómo unirse o comprar (Pasos) */
+        .steps-container {
+            padding: 60px 8%;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .steps-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .step-card {
+            background-color: #fff8f9;
+            padding: 35px 25px;
+            border-radius: 15px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .step-card h3 {
+            color: #4a4a4a;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .step-card p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .pagos-banner {
+            background-color: #ff5274;
+            color: white;
+            padding: 40px 8%;
+            text-align: center;
+        }
+
+        .pagos-banner h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .pagos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pago-item {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.2s;
+        }
+
+        .pago-item:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .pago-logo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 4px;
+            /* Se eliminó el fondo blanco y el padding */
+            mix-blend-mode: multiply; /* Vuelve invisible el fondo blanco de las imágenes */
+        }
+
+        /* Botones de Acción Especiales (CTA) */
+        .btn-cta {
+            display: inline-block;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 82, 116, 0.3);
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1ebd57;
+            transform: translateY(-2px);
+        }
+
+        .btn-join {
+            background-color: #ff5274;
+            color: white;
+        }
+
+        .btn-join:hover {
+            background-color: #e6395b;
+            transform: translateY(-2px);
+        }
+
+        /* Info de Pagos */
+        .pagos-banner {
+            background-color: #ff5274;
+            color: white;
+            padding: 30px 8%;
+            text-align: center;
+        }
+
+        .pagos-banner p {
+            font-size: 15px;
+            max-width: 800px;
+            margin: 10px auto 0 auto;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Formulario Boletín */
+        .newsletter-box {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-box input {
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            width: 280px;
+            outline: none;
+        }
+
+        .newsletter-box button {
+            background-color: #ff5274;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .newsletter-box button:hover {
+            background-color: #e6395b;
+        }
+
+        /* Contacto */
+        .contacto-seccion {
+            background-color: #fff8f9;
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .contacto-contenido {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 40px;
+            text-align: left;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contacto-info, .contacto-redes {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .contacto-info h3, .contacto-redes h3 {
+            font-size: 20px;
+            color: #ff5274;
+            margin-bottom: 15px;
+        }
+
+        .contacto-info p {
+            margin-bottom: 10px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .redes-links a {
+            display: inline-block;
+            background-color: #fff0f2;
+            color: #ff5274;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .redes-links a:hover {
+            background-color: #ff5274;
+            color: white;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        /* --- ADAPTACIÓN RESPONSIVA --- */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0); 
+            }
+
+            .close-btn {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-header">
+        <div class="logo-mobile">FARMASI by Ida</div>
+        <button class="menu-btn" onclick="toggleMenu()">&#9776;</button>
+    </div>
+
+    <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleMenu()">&times;</button>
+        <div class="logo">FARMASI by Ida</div>
+        <nav>
+            <a href="#inicio" onclick="closeMenuMobile()">Inicio</a>
+            <a href="#nosotros" onclick="closeMenuMobile()">¿Por qué elegirnos?</a>
+            <a href="#productos" onclick="closeMenuMobile()">Productos</a>
+            <a href="#como-comprar" onclick="closeMenuMobile()">Cómo Comprar</a>
+            <a href="#contacto" onclick="closeMenuMobile()">Contacto</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <section id="inicio" class="hero">
+            <h1>Resalta tu belleza natural</h1>
+            <p>Descubre nuestra línea de cosméticos de alta gama, orgánicos y libres de crueldad animal.</p>
+            <a href="#productos" class="btn-join" style="text-decoration: none; padding: 12px 30px;">Ver Catálogo</a>
+        </section>
+
+        <section id="nosotros" class="features-container">
+            <h2 class="section-title">¿Por qué elegirnos?</h2>
+            <p style="color: #666; max-width: 700px; margin: -20px auto 30px auto; line-height: 1.6;">En un mercado saturado de opciones, nos diferenciamos por ofrecer fórmulas bajo estrictos estándares de integridad y resultados profesionales respaldados por la ciencia médica y estética.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Reglas de Oro de Dr. C. Tuna</h3>
+                    <p>Todos nuestros productos de cuidado de la piel y maquillaje están formulados bajo estrictos estándares europeos. Son libres de parabenos, metales pesados, veganos y Cruelty-Free (no probados en animales).</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Calidad Premium a Precios Accesibles</h3>
+                    <p>Ofrecemos alta cosmética y tecnología antiedad con resultados comprobados, pero a un costo que se adapta perfectamente a la realidad del consumidor venezolano.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Apoyo y Capacitación Continua</h3>
+                    <p>Si decides emprender con nosotros, no estarás sola. Te ofrecemos un sistema de duplicación médica/estética, capacitaciones de ventas gratuitas y estrategias digitales para asegurar tu éxito en Venezuela.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="productos" class="products-container">
+            <h2 class="section-title">Nuestras Líneas de Productos</h2>
+            <p style="color: #666; margin: -25px auto 40px auto;">Productos individuales desde $10 USD hasta $45 USD con relación calidad-precio imbatible.</p>
+            
+            <div class="grid-productos">
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="Skin Care" class="producto-img">
+                    <div class="producto-info">
+                        <div class="producto-categoria">Skin Care</div>
+                        <div class="producto-titulo">Cuidado de la Piel</div>
+                        <p class="producto-descripcion">Tratamientos especializados para el acné, manchas (Lumi Radiance), antiedad (Resurface / Age Reversist) y piel sensible.</p>
+                        <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
+                    </div>
+                </div>
+
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1631730359575-38e4755d772b?auto=format&fit=crop&w=400&q=80" alt="Maquillaje" class="producto-img">
+                    <div class="producto-info">
+                        <div class="producto-categoria">Rostro y Labios</div>
+                        <div class="producto-titulo">Maquillaje Profesional</div>
+                        <p class="producto-descripcion">Bases de alta cobertura con efecto filtro, labiales de larga duración que no resecan los labios y máscaras de pestañas de impacto.</p>
+                        <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
+                    </div>
+                </div>
+
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80" alt="Capilar" class="producto-img">
+                    <div class="producto-info">
+                        <div class="producto-categoria">Corporal y Capilar</div>
+                        <div class="producto-titulo">Cuidado Integral</div>
+                        <p class="producto-descripcion">Champús especializados para la caída del cabello (línea de Ajo y Capixyl) y geles de masaje corporales sumamente relajantes.</p>
+                        <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
+                    </div>
+                </div>
+
+                <div class="producto-card">
+                    <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80" alt="Nutricion" class="producto-img">
+                    <div class="producto-info">
+                        <div class="producto-categoria">Bienestar</div>
+                        <div class="producto-titulo">Nutrición y Bienestar</div>
+                        <p class="producto-descripcion">Suplementos alimenticios, colágeno y cafés saludables (con achicoria o colágeno) para cuidar tu cuerpo de adentro hacia afuera.</p>
+                        <a href="#como-comprar" class="btn-add" style="text-decoration:none; display:inline-block;">Ver opciones</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="pagos-banner">
+            <h2>Métodos de Pago Aceptados</h2>
+            <p style="font-size: 15px; opacity: 0.9; max-width: 700px; margin: 0 auto;">Coordinamos tu entrega de forma rápida y segura a través de las opciones más cómodas en Venezuela:</p>
+            
+            <div class="pagos-grid">
+                <div class="pago-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj3G8ua41WWbbtvOXDU50uh4l2oRX7c7-VARsu7G0w4PpaN4BxFCm7oabr&s=10" alt="Pago Móvil" class="pago-logo">
+                    Pago Móvil
+                </div>
+                <div class="pago-item">
+                    <img src="https://www.shutterstock.com/image-vector/vector-illustration-bolivar-venezuela-currency-260nw-2251311029.jpg" alt="Transferencias" class="pago-logo">
+                    Transferencias en Bs.
+                </div>
+                <div class="pago-item">
+                    <img src="https://logodownload.org/wp-content/uploads/2022/03/zelle-logo-1.png" alt="Zelle" class="pago-logo">
+                    Zelle
+                </div>
+                <div class="pago-item">
+                    <img src="https://cdn.pixabay.com/photo/2021/04/30/16/47/bnb-6219388_1280.png" alt="Binance" class="pago-logo">
+                    Binance (USDT)
+                </div>
+                <div class="pago-item">
+                    <img src="https://play-lh.googleusercontent.com/DbGt0ok20d0c_ovvv4jbrYb8OtxtAVEO1_1neY7Gp_uhM2JKb3bdU3kA0HWZhod4oLcDXnEcbTTWyT_Eh2caqog=w240-h480-rw" alt="Zinli" class="pago-logo">
+                    Zinli
+                </div>
+                <div class="pago-item">
+                    <img src="https://www.shutterstock.com/image-vector/dollar-cash-icon-currency-symbol-260nw-1908013453.jpg" alt="Efectivo" class="pago-logo">
+                    Efectivo
+                </div>
+            </div>
+        </div>
+
+        <section id="como-comprar" class="steps-container">
+            <h2 class="section-title">¿Cómo comprar o unirse?</h2>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <h3>Como Cliente</h3>
+                    <p>Explora nuestro catálogo digital actual, escríbenos por WhatsApp con los productos de tu preferencia, realiza tu pago y coordinamos el envío seguro a tu ciudad. ¡Incluye asesoría de belleza gratuita!</p>
+                    <a href="https://wa.me/tu_numero_aqui" target="_blank" class="btn-cta btn-whatsapp">👉 ¡Quiero ver el Catálogo y Comprar!</a>
+                </div>
+
+                <div class="step-card">
+                    <h3>Como Socio (Brand Influencer)</h3>
+                    <p>Adquiere tu membresía de inicio (Kit de Inicio) para obtener desde un 30% hasta un 50% de descuento de por vida en todos los productos y obtén el derecho a comisionar por armar tu propio equipo.</p>
+                    <a href="https://wa.me/tu_numero_aqui" target="_blank" class="btn-cta btn-join">👉 Regístrate como Socio y Gana 50%</a>
+                </div>
+            </div>
+
+            <div style="margin-top: 50px; background-color: #fff0f2; padding: 30px; border-radius: 15px;">
+                <h3>Suscríbete a nuestro Boletín de Belleza</h3>
+                <p style="color: #666; font-size: 14px; margin-top: 5px;">Déjanos tu correo para recibir tips de Skincare, lanzamientos exclusivos en Venezuela y promociones del mes antes que nadie.</p>
+                <div class="newsletter-box">
+                    <input type="email" placeholder="Tu correo electrónico" required>
+                    <button type="button">Suscribirse</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="contacto-seccion">
+            <h2>Contacto Directo</h2>
+            <div class="contacto-contenido">
+                <div class="contacto-info">
+                    <h3>¿Tienes dudas?</h3>
+                    <p>Escríbenos o visítanos en nuestras redes oficiales. ¡Estamos listos para asesorarte con los mejores productos Farmasi de Venezuela!</p>
+                    <p><strong>WhatsApp:</strong> +58 412-1234567</p>
+                    <p><strong>Email:</strong> contacto@farmasibyida.com</p>
+                </div>
+                <div class="contacto-redes">
+                    <h3>Síguenos</h3>
+                    <p>Mantente al tanto de nuestros lanzamientos, ofertas y tips de belleza:</p>
+                    <div class="redes-links">
+                        <a href="https://instagram.com" target="_blank">Instagram</a>
+                        <a href="https://facebook.com" target="_blank">Facebook</a>
+                        <a href="https://tiktok.com" target="_blank">TikTok</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Farmasi by Ida. Todos los derechos reservados.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMenuMobile() {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
+
